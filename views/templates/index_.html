@@ -4,7 +4,8 @@
     <title> Welcome to your stats </title>
    </head>
     <body>
-      <div>{{ div }}</div>
-        {{ script }}
+      <div>{{ div|safe }}</div>
+        {{ script|safe }}
+        {{ dom|safe }}
     </body>
 </html>

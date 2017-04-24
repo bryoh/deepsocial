@@ -1,5 +1,6 @@
 import deepsocial.views.chart_examples as fut
 
+import re
 chart_name = 'test'
 chart_labels = 'blue', 'red', 'white'
 chart_data_set = 12, 15, 200
@@ -7,9 +8,14 @@ chart_type = 'PolarArea'
 
 
 def test_random_colour():
-    given = 'blah'
-    expected = 'blah'
-    assert fut.random_colour() == expected 
+    rgbstring = re.compile(r'#[a-fA-F0-9]{6}$')
+    ishexcolour =  lambda value: True if rgbstring.match(value) else False
+    assert ishexcolour(fut.random_colour()) == True, 'Default random generator is hex'
+    assert ishexcolour(fut.random_colour(int_range=(10, 254))) == True, 'color generator is hex with range'
+    assert ishexcolour(fut.random_colour('rgba')) == False, 'RGB'
+    assert fut.random_colour(colour_typ='other') == None, 'Sanity check'
+
+
 
 
 def test_create_arg_dic():

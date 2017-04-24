@@ -7,6 +7,9 @@ ret = {'name': None, 'chart_type': None, 'labels': None}
 import chartjs
 from pprint import pprint as pp
 from bs4 import BeautifulSoup
+from random import randint
+
+
 
 def example(args_dict=None):
     ''' TODO: Modify this so that is accepts a dictionary with 4 keys '''
@@ -52,12 +55,16 @@ def return_chartjs_dic(list_of_html_tags):
 
 
 
-def random_colour():
+def random_colour(colour_typ='hex', int_range=None):
     ''' generates a random colour '''
-    # TODO: Expand this function so that it generates a random colour from a range
-    pass
-    return 'blah'
+    if int_range is None:
+        int_range = 0, 255
 
+    if colour_typ == "hex":
+        integer_values = lambda: randint(int_range[0], int_range[1])
+        return '#%02X%02X%02X' % (integer_values(), integer_values(), integer_values())
+    if colour_typ == "rgba":
+        return "rgba({},{},{},{})".format(randint(100, 200), randint(120, 200), randint(100, 200),randint(150, 200))
 
 def create_arg_dic(chart_name, chart_labels, chart_data_set, chart_type):
     ''' create a dictionary to use as the argument for the chart constructor '''

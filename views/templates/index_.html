@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
     <head>
+    {% from "mytools.html" import head_html  %}
+    {% from "mytools.html" import footer_html %}
+
+
     <title> Welcome to your stats </title>
+    {{ head_html() }}   
+ 
    </head>
     <body>
       <div>{{ div|safe }}</div>
         {{ script|safe }}
-        {{ dom|safe }}
+    {{ footer_html() }}
+       {{ dom|safe }}
     </body>
 </html>

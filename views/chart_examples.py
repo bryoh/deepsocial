@@ -56,6 +56,7 @@ def random_colour():
     ''' generates a random colour '''
     # TODO: Expand this function so that it generates a random colour from a range
     pass
+    return 'blah'
 
 
 def create_arg_dic(chart_name, chart_labels, chart_data_set, chart_type):

@@ -1,5 +1,6 @@
 from flask import Flask, render_template
-from chart_examples import create_chart_elements
+from views.chart_examples import create_chart_elements
+# from chart_examples import create_chart_elements
 from pprint import pprint
 
 

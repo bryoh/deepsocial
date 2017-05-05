@@ -68,7 +68,7 @@ def chart_constructor(args_dict):
     chart_obj.set_colors(list_of_colors)
     chart_obj.set_highlights(list_of_highlights)
     chart_obj.add_dataset(data_set)
-    return chart_obj.make_chart()
+    return chart_obj.my_make_chart()
 
 
 def create_soup(html_str):

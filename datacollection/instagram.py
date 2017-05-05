@@ -50,6 +50,14 @@ class Profile(User):
         self.media_recent_data = request_handler(self.recent_media_url, 'data')
         self.media_recent_obj_list = [Media(media_data=obj) for obj in self.media_recent_data]
 
+    def created_times_fmt(self, time_labels):
+        """
+        :return a reversed  list of formatted created time, useful for label
+        """
+        return [datetime.datetime.strptime(obj.created_time, '%c').strftime(time_labels)for obj in self.media_recent_obj_list[::-1]]
+
+    def recent_likes_reversed(self): return [obj.likes for obj in self.media_recent_obj_list[::-1]]
+
 
 # create class Media
 class Media(User):

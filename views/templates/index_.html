@@ -14,6 +14,7 @@
         <div class="container">
             <h1>Hello, world!</h1>
             <p>work in progress</p>
+            <p> Using bryoh_15 data</p>
         </div>
     </div>
 
@@ -38,13 +39,18 @@
           </div> <!-- /row -->
 
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 {{common_tags[0]|safe}}
             </div> <!-- /col-md-6 -->
 
-            <div class="col-md-6">
+            <div class="col-md-4">
+                {{best_tags[0]|safe}}
+            </div> <!-- /col-md-6 -->
+
+            <div class="col-md-4">
                 {{follows_vs_following[0]|safe}}
             </div> <!-- /col-md-6 -->
+
           </div> <!-- /row -->
         </div>
     </div>
@@ -55,6 +61,7 @@
     <script> {{ comment_growth[1]|safe }} {{ comment_growth[2]|safe }} </script>
     <script> {{common_tags[1]|safe }} {{ common_tags[2]|safe }} </script>
     <script> {{popular_days[1]|safe }} {{ popular_days[2]|safe }} </script>
+    <script> {{best_tags[1]|safe }} {{ best_tags[2]|safe }} </script>
     {{ footer_html() }}
 
     </body>

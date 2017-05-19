@@ -72,6 +72,16 @@ class Profile(User):
 
     def reversed_media_id_urls(self): return [obj.link for obj in self.media_recent_obj_list[::-1]]
 
+    def reversed_tags_s_likes(self):
+        ret = {}
+        for tag in self.common_tags:
+            for media in self.media_recent_obj_list[::-1]:
+                if tag in media.tags:
+                    old_val = ret.setdefault(tag, 0)
+                    ret[tag] = old_val + media.likes
+        return ret
+
+
 
 
 # create class Media

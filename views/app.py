@@ -12,9 +12,15 @@ app = Flask(__name__)
 time_labels = "%d%b"
 
 
-def return_word_cloud(title, user, element_id):
+def return_word_cloud(title, dict_obj, element_id):
+    """
+    :param title: string which will be the div element
+    :param dict_obj: dictionary where key is a string, and value is its weight
+    :param element_id: can be anything as long as it is unique within the webpage
+    :return: two elements. div, script
+    """
     common_tags_dict = ''
-    for k, v in user.common_tags_dict.items():
+    for k, v in dict_obj.items():
         common_tags_dict += '{text: "%s",weight: %s},' % (str(k), str(v))
     div = """
      <h2> %s </h2>
@@ -86,7 +92,8 @@ def index():
     comment_growth = return_ordered_div_elements(create_chart_elements('Comments vs Time', user.created_times_fmt(time_labels), user.recent_comment_count(), 'Line'))
     popular_times = return_ordered_div_elements(create_chart_elements('Popular times', popular_times_data[0], popular_times_data[1], 'Radar'))
     popular_days = return_ordered_div_elements(create_chart_elements('Popular Days', popular_days_data[0], popular_days_data[1], 'Radar'))
-    common_tags = return_word_cloud('Most used hastags', user, 'myHashtags')
+    common_tags = return_word_cloud('Most used hastags', user.common_tags_dict, 'myHashtags')
+    best_tags = return_word_cloud('Best Used tags', user.reversed_tags_s_likes(),'myBestTags')
     return render_template('index_.html',
                            example=example,
                            follows_vs_following=follows_vs_following,
@@ -94,7 +101,9 @@ def index():
                            comment_growth=comment_growth,
                            popular_times=popular_times,
                            popular_days=popular_days,
-                           common_tags=common_tags)
+                           common_tags=common_tags,
+                           best_tags=best_tags
+                           )
 
 
 if __name__ == '__main__':

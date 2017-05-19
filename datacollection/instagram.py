@@ -5,6 +5,8 @@ Each of the classes has quick access attributes such as number of followers, use
 import datetime
 from pprint import pprint as pp
 from datacollection.request_handler import request_handler
+import itertools
+from collections import Counter
 time_fmt = "%c"  # because time is very important define it here.
 access_token = "42174198.c3c6c77.41a23e7a46cb41879a57fc7197fa3dfd"
 
@@ -49,14 +51,27 @@ class Profile(User):
         self.media_total = self.counts['media']
         self.media_recent_data = request_handler(self.recent_media_url, 'data')
         self.media_recent_obj_list = [Media(media_data=obj) for obj in self.media_recent_data]
-
+        self.common_tags = list(itertools.chain(*[Media(media_data=obj).tags for obj in self.media_recent_data]))
+        self.common_tags_dict = {tag: int(Counter(self.common_tags)[tag]) for
+                                 tag in self.common_tags}
     def created_times_fmt(self, time_labels):
         """
         :return a reversed  list of formatted created time, useful for label
         """
         return [datetime.datetime.strptime(obj.created_time, '%c').strftime(time_labels)for obj in self.media_recent_obj_list[::-1]]
 
+    def each_media_obj(self):
+        for obj in self.media_recent_obj_list[::-1]:
+            yield Media(media_data=obj)
+
+    def reversed_common_tags(self): return list(itertools.chain(*[obj.tags for obj in self.each_media_obj()]))
+
     def recent_likes_reversed(self): return [obj.likes for obj in self.media_recent_obj_list[::-1]]
+
+    def recent_comment_count(self): return [obj.comments for obj in self.media_recent_obj_list[::-1]]
+
+    def reversed_media_id_urls(self): return [obj.link for obj in self.media_recent_obj_list[::-1]]
+
 
 
 # create class Media
@@ -101,7 +116,6 @@ def test_sanity():
 
 
 if __name__ == "__main__":
-    import pdb; pdb.set_trace()
     bryoh = Profile('bryoh_15')
     pp( bryoh.__dict__ )
 

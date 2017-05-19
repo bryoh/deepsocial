@@ -10,33 +10,51 @@
  
    </head>
     <body>
-    <div class="jumbotron">
+    <div class="page-header">
         <div class="container">
             <h1>Hello, world!</h1>
             <p>work in progress</p>
-            <p>
-                <a class="btn btn-primary btn-lg">Learn more</a>
-            </p>
         </div>
     </div>
 
-    <div class="container">
-      <div class="row">
-        <div class="col-md-4">
-            {{popular_times[0]|safe }}
-        </div> <!-- /col-md-4 -->
-        <div class="col-md-4">
-            {{follows_vs_following[0]|safe}}
-        </div> <!-- /col-md-4 -->
-        <div class="col-md-4">
-            {{growth[0]|safe}}
-        </div> <!-- /col-md-4 -->
-      </div> <!-- /row -->
+    <div class="jumbotron">
+        <div class="container-fluid">
+
+          <div class="row">
+            <div class="col-md-3">
+                {{popular_times[0]|safe }}
+            </div> <!-- /col-md-6 -->
+
+            <div class="col-md-3">
+                {{popular_days[0]|safe}}
+            </div> <!-- /col-md-6 -->
+
+            <div class="col-md-3">
+                {{growth[0]|safe}}
+            </div> <!-- /col-md-6 -->
+            <div class="col-md-3">
+                {{comment_growth[0]|safe}}
+            </div> <!-- /col-md-6 -->
+          </div> <!-- /row -->
+
+          <div class="row">
+            <div class="col-md-6">
+                {{common_tags[0]|safe}}
+            </div> <!-- /col-md-6 -->
+
+            <div class="col-md-6">
+                {{follows_vs_following[0]|safe}}
+            </div> <!-- /col-md-6 -->
+          </div> <!-- /row -->
+        </div>
     </div>
+
     <script> {{ follows_vs_following[1]|safe }} {{ follows_vs_following[2]|safe }} </script>
     <script> {{ popular_times[1]|safe }} {{ popular_times[2]|safe }} </script>
     <script> {{ growth[1]|safe }} {{ growth[2]|safe }} </script>
-
+    <script> {{ comment_growth[1]|safe }} {{ comment_growth[2]|safe }} </script>
+    <script> {{common_tags[1]|safe }} {{ common_tags[2]|safe }} </script>
+    <script> {{popular_days[1]|safe }} {{ popular_days[2]|safe }} </script>
     {{ footer_html() }}
 
     </body>

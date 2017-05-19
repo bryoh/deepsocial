@@ -4,3 +4,6 @@ canvas {
   width: 100%;
   height: auto;
 }
+body{
+    background: navy; !important
+}

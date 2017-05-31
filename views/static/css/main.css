@@ -4,6 +4,7 @@ canvas {
   width: 100%;
   height: auto;
 }
-body{
-    background: navy; !important
+html body{
+    background-color : navy; !important
 }
+

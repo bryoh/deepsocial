@@ -24,7 +24,7 @@ def return_word_cloud(title, dict_obj, element_id):
         common_tags_dict += '{text: "%s",weight: %s},' % (str(k), str(v))
     div = """
      <h2> %s </h2>
-    <div id="%s" style="height: 200px; width:400px; "></div>
+     <div id="%s" style="height: 200px; width:400px; "></div>
         """ %(title, element_id)
 
     script = """ $(function() { $("#%s").jQCloud([%s],{autoResize: true});
@@ -86,7 +86,7 @@ def index():
     user = instagram.Profile('bryoh_15')
     popular_times_data = created_time_vs_likes(user)
     popular_days_data = created_day_vs_likes(user)
-    follows_vs_following = return_ordered_div_elements(create_chart_elements('Followers vs Following', ['followers', 'following'], [user.followers, user.follows], "Pie"))
+    follows_vs_following = return_ordered_div_elements(create_chart_elements('Followers vs Following', ['followers', 'following'], [user.followers, user.follows], "Doughnut"))
     example = return_ordered_div_elements(create_chart_elements('test', ["#E24736", "#FF9438", "#FFF249"], [5, 5.5, 10], "PolarArea"))
     growth = return_ordered_div_elements(create_chart_elements('Likes vs Time', user.created_times_fmt(time_labels), user.recent_likes_reversed(), 'Line'))
     comment_growth = return_ordered_div_elements(create_chart_elements('Comments vs Time', user.created_times_fmt(time_labels), user.recent_comment_count(), 'Line'))
@@ -96,6 +96,7 @@ def index():
     best_tags = return_word_cloud('Best Used tags', user.reversed_tags_s_likes(),'myBestTags')
     return render_template('index_.html',
                            example=example,
+                           username=user.name,
                            follows_vs_following=follows_vs_following,
                            growth=growth,
                            comment_growth=comment_growth,

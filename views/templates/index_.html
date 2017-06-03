@@ -11,35 +11,48 @@
    </head>
     <body>
       <div class='page-header'>
-        <h1> Hi {{username|safe}} <small> Welcome to your dashboard</small></h1>
+          <div class="row">
+            <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <h1> Hi {{username|safe}} <small> Welcome to your Dashboard</small></h1>
+          </div>
       </div>
 
-      <div class='container-fluid'>
-        <div class='row-fluid'>
-
-            <div class='span2'>
-                <div class='col-xs-12 col-sm-12 col-md-12 col-lg-1'>{{follows_vs_following[0]|safe}}</div>
+        <div id="mySidenav" >
+            <div class='container'>
+                <div class="row">
+                    <div class='col-xs-12 col-sm-12 col-md-12 col-lg-1'></div>
+                    <div class='col-xs-12 col-sm-12 col-md-12 col-lg-1'></div>
+                    <div class='col-xs-12 col-sm-12 col-md-12 col-lg-1'></div>
+                    <div class='col-xs-6 col-sm-6 col-md-6 col-lg-3'>{{follows_vs_following[0]|safe}}</div>
+                </div>
             </div>
-          
-            <div class='span10'>
-            <div class='container container-fluid'> 
+        </div>
+
+
+            <div class='container-fluid'>
               <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 ">{{popular_times[0]|safe }}</div>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 ">{{growth[0]|safe }}</div>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2 ">{{common_tags[0]|safe}}</div>
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 ">{{popular_times[0]|safe }}</div>
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 ">{{growth[0]|safe }}</div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 ">{{common_tags[0]|safe}}</div>
               </div>
               <div class='row'>
-                <div class='col-xs-12 col-sm-12 col-md-12 col-lg-3 '>{{popular_days[0]|safe}}</div>
-                <div class='col-xs-12 col-sm-12 col-md-12 col-lg-4 '>{{comment_growth[0]|safe}}</div>
-                <div class='col-xs-12 col-sm-12 col-md-12 col-lg-3 '>{{best_tags[0]|safe}}</div>
-              </div>  
+                <div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 '>{{popular_days[0]|safe}}</div>
+                <div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 '>{{comment_growth[0]|safe}}</div>
+                <div class='col-xs-12 col-sm-12 col-md-6 col-lg-6 '>{{best_tags[0]|safe}}</div>
+              </div>
             </div>
-            </div>
-    
-        </div>
-      </div>
 
-    <script> {{ follows_vs_following[1]|safe }} {{ follows_vs_following[2]|safe }} 
+    <script>
+    function openNav() {
+            document.getElementById("mySidenav").style.display = "block";
+            }
+
+    function closeNav() {
+            document.getElementById("mySidenav").style.display = "none";
+            }
+
+    {{ follows_vs_following[1]|safe }} {{ follows_vs_following[2]|safe }}
      {{ popular_times[1]|safe }} {{ popular_times[2]|safe }} 
      {{ growth[1]|safe }} {{ growth[2]|safe }} 
      {{ comment_growth[1]|safe }} {{ comment_growth[2]|safe }}

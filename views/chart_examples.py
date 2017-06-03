@@ -112,7 +112,7 @@ def create_chart_elements(chart_name, chart_labels, chart_data_set, chart_type):
     html_str = chart_constructor(args_dict)
     soup = create_soup(html_str)
     list_of_html_tags = get_DOM_tags(soup, ['canvas', 'script'])
-    list_of_html_tags[0] = "<h2>%s</h2>" %(chart_name) + str(list_of_html_tags[0])
+    list_of_html_tags[0] = "<div class='well'> <p class='text-info text-center text-capitalize'>%s</p></div>" %(chart_name) + str(list_of_html_tags[0])
     return return_chartjs_dic(list_of_html_tags)
 
 

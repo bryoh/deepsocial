@@ -1,11 +1,29 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
     <head>
+            {% from "mytools.html" import head_html  %}
+            {% from "mytools.html" import footer_html %}
+            <title> Welcome to your stats </title>
+            {{ head_html() }}
    </head>
     <body>
-      <div>{{ div|safe }}</div>
-        {{ script|safe }}
+    <h1> How old are?</h1>
+    <form method="POST" action="/">
+        <div class="form-group row-center" style="padding-left: 25%; padding-right: 25%;">
+            <input type="text" name="username">
+        </div>
+        <input class="btn btn-primary" type="submit" value="submit">
+    </form>
+
+    <div class="container">
+      <form class="search-container">
+        <input type="text" id="search-bar" placeholder="What can I help you with today?">
+        <a href="#"><img class="search-icon" src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png"></a>
+      </form>
+    </div>
+
+
     {{ footer_html() }}
-       {{ dom|safe }}
+
     </body>
 </html>

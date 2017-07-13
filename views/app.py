@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from views.chart_examples import create_chart_elements
 from datacollection import instagram
 import datetime
@@ -78,31 +78,33 @@ def created_day_vs_likes(obj):
     return labels, values
 
 
-@app.route('/')
+@app.route('/', methods = ['GET', 'POST'])
 def index():
-    user = instagram.Profile('bryoh_15')
-    popular_times_data = created_time_vs_likes(user)
-    popular_days_data = created_day_vs_likes(user)
-    follows_vs_following = return_ordered_div_elements(create_chart_elements('follow ratio', ['followers', 'following'], [user.followers, user.follows], "Doughnut"))
-    example = return_ordered_div_elements(create_chart_elements('test', ["#E24736", "#FF9438", "#FFF249"], [5, 5.5, 10], "PolarArea"))
-    growth = return_ordered_div_elements(create_chart_elements('Likes vs Time', user.created_times_fmt(time_labels), user.recent_likes_reversed(), 'Line'))
-    comment_growth = return_ordered_div_elements(create_chart_elements('Comments vs Time', user.created_times_fmt(time_labels), user.recent_comment_count(), 'Line'))
-    popular_times = return_ordered_div_elements(create_chart_elements('Popular times', popular_times_data[0], popular_times_data[1], 'Radar'))
-    popular_days = return_ordered_div_elements(create_chart_elements('Popular Days', popular_days_data[0], popular_days_data[1], 'Radar'))
-    common_tags = return_word_cloud('Most used hastags', user.common_tags_dict, 'myHashtags')
-    best_tags = return_word_cloud('Best Used tags', user.reversed_tags_s_likes(),'myBestTags')
-    return render_template('index_.html',
-                           example=example,
-                           username=user.name,
-                           follows_vs_following=follows_vs_following,
-                           growth=growth,
-                           comment_growth=comment_growth,
-                           popular_times=popular_times,
-                           popular_days=popular_days,
-                           common_tags=common_tags,
-                           best_tags=best_tags
-                           )
-
+    if request.method == 'POST':
+        user_name = request.form['username']
+        user = instagram.Profile(str(user_name))
+        popular_times_data = created_time_vs_likes(user)
+        popular_days_data = created_day_vs_likes(user)
+        follows_vs_following = return_ordered_div_elements(create_chart_elements('follow ratio', ['followers', 'following'], [user.followers, user.follows], "Doughnut"))
+        example = return_ordered_div_elements(create_chart_elements('test', ["#E24736", "#FF9438", "#FFF249"], [5, 5.5, 10], "PolarArea"))
+        growth = return_ordered_div_elements(create_chart_elements('Likes vs Time', user.created_times_fmt(time_labels), user.recent_likes_reversed(), 'Line'))
+        comment_growth = return_ordered_div_elements(create_chart_elements('Comments vs Time', user.created_times_fmt(time_labels), user.recent_comment_count(), 'Line'))
+        popular_times = return_ordered_div_elements(create_chart_elements('Popular times', popular_times_data[0], popular_times_data[1], 'Radar'))
+        popular_days = return_ordered_div_elements(create_chart_elements('Popular Days', popular_days_data[0], popular_days_data[1], 'Radar'))
+        common_tags = return_word_cloud('Most used hastags', user.common_tags_dict, 'myHashtags')
+        best_tags = return_word_cloud('Best Used tags', user.reversed_tags_s_likes(),'myBestTags')
+        return render_template('index_.html',
+                               example=example,
+                               username=user.name,
+                               follows_vs_following=follows_vs_following,
+                               growth=growth,
+                               comment_growth=comment_growth,
+                               popular_times=popular_times,
+                               popular_days=popular_days,
+                               common_tags=common_tags,
+                               best_tags=best_tags
+                               )
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run()

@@ -5,22 +5,58 @@
             {% from "mytools.html" import footer_html %}
             <title> Welcome to your stats </title>
             {{ head_html() }}
+            <link rel="stylesheet" src="/static/css/head.css">
    </head>
     <body>
-    <h1> How old are?</h1>
-    <form method="POST" action="/">
-        <div class="form-group row-center" style="padding-left: 25%; padding-right: 25%;">
-            <input type="text" name="username">
-        </div>
-        <input class="btn btn-primary" type="submit" value="submit">
-    </form>
+
 
     <div class="container">
-      <form class="search-container">
-        <input type="text" id="search-bar" placeholder="What can I help you with today?">
-        <a href="#"><img class="search-icon" src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png"></a>
-      </form>
+        <div class="jumbotron">
+            <div class="col"> </div>
+            <div class="col">
+                <h1 class="display-1">
+                    Hello
+                </h1>
+            </div>
+            <div class="col"></div>
+        </div>
+        <div class="jumbotron">
+            <div class="col"> </div>
+            <div class="col">
+                <h1 class="display-1">
+                    Welcome
+                </h1>
+            </div>
+            <div class="col"></div>
+        </div>
+        <div class="container">
+            <div class="col"> </div>
+            <div class="col">
+                <h1 class="display-1" align="center">
+                    <i class="fa fa-line-chart" aria-hidden="true"></i>
+                    <i class="fa fa-area-chart"></i>
+                    <i class="fa fa-bar-chart"></i>
+                    <i class="fa fa-pie-chart"></i>
+                </h1>
+            </div>
+            <div class="col"></div>
+        </div>
+              <div class="row align-items-center">
+                <div class="col"> </div>
+                <div class="col">
+                    <form type="submit" method="POST" action="/" onsubmit="showSnapshot(); return false;" id="form">
+                        <div class="input-group">
+                            <input type="text" class="form-control" align="center" name="username" id="input_value" placeholder="Instagram username">
+                            <span class="input-group-btn">
+                                <button class="btn btn-secondary" type="button"> Search </button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+                <div class="col"> </div>
+              </div>
     </div>
+
 
 
     {{ footer_html() }}

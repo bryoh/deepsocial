@@ -19,24 +19,18 @@
       </div>
 
             <div class='container-fluid'>
+              <div class='row'>
+                <div class='col-xs-6 col-sm-6 col-md-6 col-lg-3'>{{follows_vs_following[0]|safe}}</div>
+                <div class='col-xs-12 col-sm-12 col-md-6 col-lg-3 '>{{popular_days[0]|safe}}</div>
+                <div class='col-xs-12 col-sm-12 col-md-6 col-lg-3 '>{{comment_growth[0]|safe}}</div>
+                <div class='col-xs-12 col-sm-12 col-md-6 col-lg-3 '>{{best_tags[0]|safe}}</div>
+              </div>
+            </div>
               <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 ">{{popular_times[0]|safe }}</div>
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 ">{{growth[0]|safe }}</div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3 ">{{popular_times[0]|safe }}</div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3 ">{{growth[0]|safe }}</div>
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 ">{{common_tags[0]|safe}}</div>
               </div>
-              <div class='row'>
-                <div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 '>{{popular_days[0]|safe}}</div>
-                <div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 '>{{comment_growth[0]|safe}}</div>
-                <div class='col-xs-12 col-sm-12 col-md-6 col-lg-6 '>{{best_tags[0]|safe}}</div>
-              </div>
-            </div>
-        <div id="mySidenav" >
-            <div class='container'>
-                <div class="row">
-                    <div class='col-xs-6 col-sm-6 col-md-6 col-lg-3'>{{follows_vs_following[0]|safe}}</div>
-                </div>
-            </div>
-        </div>
 
     <script>
     function toggleNav() {

@@ -98,7 +98,9 @@ def index():
         popular_days = return_ordered_div_elements(create_chart_elements('Popular Days', popular_days_data[0], popular_days_data[1], 'Radar'))
         common_tags = return_word_cloud('Most used hastags', user.common_tags_dict, 'myHashtags')
         best_tags = return_word_cloud('Best Used tags', user.reversed_tags_s_likes(),'myBestTags')
-        return render_template('index_.html',
+        try:
+
+            return render_template('index_.html',
                                example=example,
                                username=user.name,
                                follows_vs_following=follows_vs_following,
@@ -109,5 +111,9 @@ def index():
                                common_tags=common_tags,
                                best_tags=best_tags
                                )
+        except Exception as e:
+            print("INSTGRAM API ERROR: {!s}".format(e))
+            render_template('index.html')
+
     return render_template('index.html')
 

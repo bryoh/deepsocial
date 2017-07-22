@@ -78,6 +78,11 @@ def created_day_vs_likes(obj):
     return labels, values
 
 
+@app.route('/privacy')
+def privacy():
+    return render_template('privacypolicy.html')
+
+
 @app.route('/', methods = ['GET', 'POST'])
 def index():
     if request.method == 'POST':

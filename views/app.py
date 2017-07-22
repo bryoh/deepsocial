@@ -85,9 +85,15 @@ def privacy():
 
 @app.route('/', methods = ['GET', 'POST'])
 def index():
+    error_str=''
     if request.method == 'POST':
         user_name = request.form['username']
-        user = instagram.Profile(str(user_name))
+        try:
+            user = instagram.Profile(str(user_name))
+        except Exception as e:
+            print('INSTRAGRAM EXCEPTION: {}'.format(str(e)))
+            return render_template('index.html', error_str='Please enter a valid a username....')
+
         popular_times_data = created_time_vs_likes(user)
         popular_days_data = created_day_vs_likes(user)
         follows_vs_following = return_ordered_div_elements(create_chart_elements('follow ratio', ['followers', 'following'], [user.followers, user.follows], "Doughnut"))
@@ -98,9 +104,8 @@ def index():
         popular_days = return_ordered_div_elements(create_chart_elements('Popular Days', popular_days_data[0], popular_days_data[1], 'Radar'))
         common_tags = return_word_cloud('Most used hastags', user.common_tags_dict, 'myHashtags')
         best_tags = return_word_cloud('Best Used tags', user.reversed_tags_s_likes(),'myBestTags')
-        try:
 
-            return render_template('index_.html',
+        return render_template('index_.html',
                                example=example,
                                username=user.name,
                                follows_vs_following=follows_vs_following,
@@ -111,9 +116,6 @@ def index():
                                common_tags=common_tags,
                                best_tags=best_tags
                                )
-        except Exception as e:
-            print("INSTGRAM API ERROR: {!s}".format(e))
-            render_template('index.html')
 
-    return render_template('index.html')
+    return render_template('index.html', error_str=error_str)
 

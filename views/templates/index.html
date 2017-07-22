@@ -44,11 +44,12 @@
               <div class="row align-items-center">
                 <div class="col"> </div>
                 <div class="col">
+                    <h2> {{error_str|safe}}</h2>
                     <form type="submit" method="POST" action="/" onsubmit="showSnapshot(); return false;" id="form">
                         <div class="input-group">
                             <input type="text" class="form-control" align="center" name="username" id="input_value" placeholder="Instagram username">
                             <span class="input-group-btn">
-                                <button class="btn btn-secondary" type="button"> Search </button>
+                                <button class="btn btn-secondary" type="submit"> Search </button>
                             </span>
                         </div>
                     </form>

@@ -24,16 +24,15 @@ def example():
 
 class ChartJs(chartjs.chart):
     def my_make_chart_onload(self):
-        output = """var ctx{0} = document.getElementById("{0}").getContext("{1}");
+        return """var ctx{0} = document.getElementById("{0}").getContext("{1}");
                     var mychart{0} = new Chart(ctx{0}).{2}(chart_data{0}, {{responsive: true, barValueSpacing: {3}, scaleShowGridLines: {4}, scaleBeginAtZero: {5}}});""".format(
             str(self.canvas),
             str(self.context),
             str(self.ctype),
             str(self.barValueSpacing),
             str(self.scaleShowGridLines).lower(),
-            str(self.scaleBeginAtZero).lower()
+            str(self.scaleBeginAtZero).lower(),
         )
-        return output
 
     def my_make_chart(self):
 
@@ -63,8 +62,8 @@ def chart_constructor(args_dict):
     chart_obj = ChartJs(name, chart_type)
     chart_obj.set_labels(labels)
     chart_obj.canvas = name
-    list_of_colors = [random_colour() for i in range(len(labels))]
-    list_of_highlights = [random_colour() for i in range(len(labels))]
+    list_of_colors = [random_colour() for _ in range(len(labels))]
+    list_of_highlights = [random_colour() for _ in range(len(labels))]
     chart_obj.set_colors(list_of_colors)
     chart_obj.set_highlights(list_of_highlights)
     chart_obj.add_dataset(data_set)
@@ -84,8 +83,11 @@ def get_DOM_tags(soup, tags):
 
 def return_chartjs_dic(list_of_html_tags):
     ''' returns a dictionary of 3 keys which are canvas, fuction script(with data set) and function script for dom Manipulation '''
-    ret = {'canvas': list_of_html_tags[0], 'body_script': list_of_html_tags[1], 'dom_script': list_of_html_tags[2]}
-    return ret
+    return {
+        'canvas': list_of_html_tags[0],
+        'body_script': list_of_html_tags[1],
+        'dom_script': list_of_html_tags[2],
+    }
 
 
 def random_colour(colour_typ='hex', int_range=None):
@@ -97,7 +99,7 @@ def random_colour(colour_typ='hex', int_range=None):
         integer_values = lambda: randint(int_range[0], int_range[1])
         return '#%02X%02X%02X' % (integer_values(), integer_values(), integer_values())
     if colour_typ == "rgba":
-        return "rgba({},{},{},{})".format(randint(100, 200), randint(120, 200), randint(100, 200),randint(150, 200))
+        return f"rgba({randint(100, 200)},{randint(120, 200)},{randint(100, 200)},{randint(150, 200)})"
 
 
 def create_arg_dic(chart_name, chart_labels, chart_data_set, chart_type):
@@ -112,7 +114,9 @@ def create_chart_elements(chart_name, chart_labels, chart_data_set, chart_type):
     html_str = chart_constructor(args_dict)
     soup = create_soup(html_str)
     list_of_html_tags = get_DOM_tags(soup, ['canvas', 'script'])
-    list_of_html_tags[0] = "<div class='well'> <p class='text-info text-center text-capitalize'>%s</p></div>" %(chart_name) + str(list_of_html_tags[0])
+    list_of_html_tags[
+        0
+    ] = f"<div class='well'> <p class='text-info text-center text-capitalize'>{chart_name}</p></div>{str(list_of_html_tags[0])}"
     return return_chartjs_dic(list_of_html_tags)
 
 

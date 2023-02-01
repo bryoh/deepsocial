@@ -43,16 +43,13 @@ class chart:
         if pointHighlightStroke:
             self.pointHighlightStroke = pointHighlightStroke
         if JSinline != None:
-            if JSinline:
-                self.js = jsinline
-            else:
-                self.js = jsurl
+            self.js = jsinline if JSinline else jsurl
         if scaleBeginAtZero != None:
             self.scaleBeginAtZero = scaleBeginAtZero
 
     # Add a dataset to the chart
     def add_dataset(self, data):
-        if self.ctype == "Bar" or self.ctype == "Radar" or self.ctype == "Line":  # Line, radar or bar charts
+        if self.ctype in ["Bar", "Radar", "Line"]:  # Line, radar or bar charts
             if len(data) != len(self.labels):
                 raise ValueError("Data must be the same size as labels.")
             self.data.append({"data": data, "fillColor": self.fillColor, "strokeColor": self.strokeColor,
@@ -65,13 +62,19 @@ class chart:
                 raise ValueError(
                     "Data, labels, colors and highlights should all have the same number of values for Pie, Doughnut and PolarArea charts.")
             self.data = []  # Only one dataset can be present for these charts
-            for i, d in enumerate(data):
-                self.data.append({'value': int(d), 'color': str(self.colors[i]), 'highlight': str(self.highlights[i]),
-                                  'label': str(self.labels[i])})
+            self.data.extend(
+                {
+                    'value': int(d),
+                    'color': str(self.colors[i]),
+                    'highlight': str(self.highlights[i]),
+                    'label': str(self.labels[i]),
+                }
+                for i, d in enumerate(data)
+            )
 
     # Make a chart canvas part
     def make_chart_canvas(self):
-        if self.ctype == "Bar" or self.ctype == "Radar" or self.ctype == "Line":
+        if self.ctype in ["Bar", "Radar", "Line"]:
             dataset = """
 				{{
 					labels: {0},
@@ -81,22 +84,28 @@ class chart:
             dataset = """
 			{0}
 """.format(str(self.data))
-        output = """
+        return """
 			<canvas id="{0}" height="{1}" width="{2}"></canvas>
 			<script>
 				var chart_data{0} = {3}
 			</script>
-""".format(str(self.canvas), str(self.height), str(self.width), dataset)
-        return output
+""".format(
+            str(self.canvas), str(self.height), str(self.width), dataset
+        )
 
     # Make onload function
     def make_chart_onload(self):
-        output = """
+        return """
 					var ctx = document.getElementById("{0}").getContext("{1}");
 					var mychart = new Chart(ctx).{2}(chart_data{0}, {{responsive: true, barValueSpacing: {3}, scaleShowGridLines: {4}, scaleBeginAtZero: {5}}});
-""".format(str(self.canvas), str(self.context), str(self.ctype), str(self.barValueSpacing),
-           str(self.scaleShowGridLines).lower(), str(self.scaleBeginAtZero).lower())
-        return output
+""".format(
+            str(self.canvas),
+            str(self.context),
+            str(self.ctype),
+            str(self.barValueSpacing),
+            str(self.scaleShowGridLines).lower(),
+            str(self.scaleBeginAtZero).lower(),
+        )
 
     # Make a chart based on datasets
     def make_chart(self):
@@ -132,8 +141,7 @@ class chart:
 
     # Return full headers along with the HTML
     def make_chart_with_headers(self):
-        output = "HTTP/1.0 200 OK\n"
-        output += "Content-Type: text/html; charset=utf-8\n\n"
+        output = "HTTP/1.0 200 OK\n" + "Content-Type: text/html; charset=utf-8\n\n"
         output += self.make_chart_full_html()
         return output
 

@@ -18,15 +18,19 @@ class User(object):
     def __init__(self, username=None, media_id=None):
         self.username = username
         self.media_id = media_id
-        self.media_id_url = "https://api.instagram.com/v1/media/{}?access_token={}".format(self.media_id, access_token) if media_id is not None else None
+        self.media_id_url = (
+            f"https://api.instagram.com/v1/media/{self.media_id}?access_token={access_token}"
+            if media_id is not None
+            else None
+        )
         if username is not None:
-            search_url = "https://api.instagram.com/v1/users/search?q={}&access_token={}".format(username, self.access_token)
+            search_url = f"https://api.instagram.com/v1/users/search?q={username}&access_token={self.access_token}"
             self.user_search_data = request_handler(search_url, "data")[0]  # requests.get(search_url)
             self.user_id = self.user_search_data['id']
 
-            self.user_info_url = "https://api.instagram.com/v1/users/{}/?access_token={}".format(self.user_id, access_token)
-            self.recent_media_url = "https://api.instagram.com/v1/users/{}/media/recent/?access_token={}".format(self.user_id, access_token)
-            self.followed_by_url = "https://api.instagram.com/v1/users/{}/followed-by/?access_token={}".format(self.user_id, access_token)
+            self.user_info_url = f"https://api.instagram.com/v1/users/{self.user_id}/?access_token={access_token}"
+            self.recent_media_url = f"https://api.instagram.com/v1/users/{self.user_id}/media/recent/?access_token={access_token}"
+            self.followed_by_url = f"https://api.instagram.com/v1/users/{self.user_id}/followed-by/?access_token={access_token}"
             self.user_info_data = request_handler(self.user_info_url, 'data')
 
 

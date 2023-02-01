@@ -10,9 +10,7 @@ json object (lookup_str will mostlikey default to 'data' key)
 import requests
 def get_request(url, requests=requests):
     '''returns request.get object '''
-    result = requests.get(url)
-    ## insert an assert check on the status code before return
-    return result
+    return requests.get(url)
 
 def look_up_key(dict_item, key_name):
     ''' if key exists return value otherwise return dict_item '''

@@ -19,10 +19,11 @@ def return_word_cloud(title, dict_obj, element_id):
     :param element_id: can be anything as long as it is unique within the webpage
     :return: two elements. div, script
     """
-    common_tags_dict = ''
-    for k, v in dict_obj.items():
-        common_tags_dict += '{text: "%s",weight: %s},' % (str(k), str(v))
-    div = """<p class='text-info text-center text-capitalize'> %s </p><div id="%s" style="height: 200px; width:400px; "></div>""" %(title, element_id)
+    common_tags_dict = ''.join(
+        '{text: "%s",weight: %s},' % (str(k), str(v))
+        for k, v in dict_obj.items()
+    )
+    div = f"""<p class='text-info text-center text-capitalize'> {title} </p><div id="{element_id}" style="height: 200px; width:400px; "></div>"""
 
     script = """ $(function() { $("#%s").jQCloud([%s],{autoResize: true});
       });
@@ -91,7 +92,7 @@ def index():
         try:
             user = instagram.Profile(str(user_name))
         except Exception as e:
-            print('INSTRAGRAM EXCEPTION: {}'.format(str(e)))
+            print(f'INSTRAGRAM EXCEPTION: {str(e)}')
             return render_template('index.html', error_str='Please enter a valid a username....')
 
         popular_times_data = created_time_vs_likes(user)

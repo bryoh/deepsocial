@@ -9,14 +9,14 @@ chart_type = 'PolarArea'
 
 def test_random_colour():
     rgbstring = re.compile(r'#[a-fA-F0-9]{6}$')
-    ishexcolour =  lambda value: True if rgbstring.match(value) else False
+    ishexcolour = lambda value: bool(rgbstring.match(value))
     print('CHECK: Random generour is hex')
     assert ishexcolour(fut.random_colour()) == True, 'Default random generator is hex'
     print('CHECK: Colour generator is hex with range')
     assert ishexcolour(fut.random_colour(int_range=(10, 254))) == True, 'color generator is hex with range'
     print('CHECK: RGB values')
     assert ishexcolour(fut.random_colour('rgba')) == False, 'RGB'
-    assert fut.random_colour(colour_typ='other') == None, 'Sanity check'
+    assert fut.random_colour(colour_typ='other') is None, 'Sanity check'
 
 
 
